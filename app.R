@@ -1,8 +1,19 @@
-library(shiny);library(jsonlite);library(rJava);library(shinythemes);library(rvest)
-library(tm); library(SnowballC); library(cld2);library(httr);library(XML); library(ggplot2)
-library(V8); library(dplyr); library(DT); library(stringi); library(repmis)
+# Setup ---------------
+# ---------------------
+foo <- function(x){
+  for( i in x ){
+    if( ! require( i , character.only = TRUE ) ){
+      install.packages( i , dependencies = TRUE )
+      require( i , character.only = TRUE )
+    }
+  }
+}
+foo(c("shiny","shinythemes","rvest","tm","ggplot2","stringi") )
 
-# Data
+
+# Data ----------------
+# ---------------------
+
 jel_data <- read.csv("http://github.com/steroidfella/HS650F2019/raw/master/Data/jel_data.csv", stringsAsFactors = FALSE)
 jel_data <- jel_data[,-1]
 
