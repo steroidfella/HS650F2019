@@ -1,0 +1,23 @@
+---
+title: "ref_geom_bar"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(rvest);library(xml2);library(httr)
+library(ggplot2)
+```
+
+```{r}
+url <- "https://ggplot2.tidyverse.org/reference/geom_bar.html"
+uastring <- "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36"
+session <- html_session(url, user_agent(uastring))
+s <- html_text(html_nodes(session, xpath = "//*[@class='input']")[1])
+```
+
+```{r}
+y <- strsplit(s, split = '\n', fixed = TRUE)[[1]][3]
+z <- strsplit(s, split = '\n', fixed = TRUE)[[1]][5]
+eval(parse(text = y))
+eval(parse(text = z))
+```
