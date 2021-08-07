@@ -1,23 +1,35 @@
 ---
-title: "ref_geom_bar"
+title: "Bar Charts"
 output: html_document
 ---
+How to make a bar chart in R by converting ggplot to plotly.
 
 ```{r setup, include=FALSE}
 library(rvest);library(xml2);library(httr)
 library(ggplot2)
 ```
 
-```{r}
+```{r, include=FALSE}
 url <- "https://ggplot2.tidyverse.org/reference/geom_bar.html"
 uastring <- "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36"
 session <- html_session(url, user_agent(uastring))
 s <- html_text(html_nodes(session, xpath = "//*[@class='input']")[1])
 ```
 
-```{r}
+```{r, include=FALSE}
 y <- strsplit(s, split = '\n', fixed = TRUE)[[1]][3]
 z <- strsplit(s, split = '\n', fixed = TRUE)[[1]][5]
+z_1 <- paste("p <- ", z)
 eval(parse(text = y))
-eval(parse(text = z))
+p <- eval(parse(text = z))
 ```
+
+```{r, echo=F, results='asis'}
+# a <- paste0(y, "  \n", z_1)
+writeLines(paste0(y, "  \n", z_1))
+```
+
+```{r}
+plotly::ggplotly(p)
+```
+
